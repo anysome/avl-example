@@ -13,6 +13,18 @@ class HomeController extends Controller {
     const { p, s } = this.ctx.request.body;
     this.ctx.result = md5(p + s);
   }
+
+  async queryShop() {
+    let { page, size } = this.ctx.request.body;
+    page || (page = 1);
+    size || (size = 15);
+    const content = await this.ctx.service.shop.query(page -1, size);
+    this.ctx.result = {
+      page,
+      size,
+      content,
+    };
+  }
 }
 
 module.exports = HomeController;

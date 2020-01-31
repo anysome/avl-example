@@ -22,6 +22,7 @@ module.exports = app => {
   router.post('/api/login/google.json', controller.login.google);
   router.get('/api/logout.json', controller.login.logout);
   router.get('/api/status.json', isLogin, controller.login.checkStatus);
+  router.post('/api/shop/query.json', isLogin, controller.home.queryShop);
 
   // user test
   router.post('/test.json', controller.home.test);

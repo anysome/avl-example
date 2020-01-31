@@ -1,83 +1,22 @@
-import React, { useState } from 'react';
-import { Table, Pagination, Tab, Search } from '@alifd/next';
+import React, { useState, useEffect } from 'react';
+import { Table, Pagination, Tab, Search, DatePicker, Select, Button, TimePicker } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 import IceImg from '@icedesign/img';
+import moment from 'moment';
+import axios from 'axios';
 import SubCategoryItem from './SubCategoryItem';
 import data from './data';
 import styles from  './index.module.scss';
 
 const queryCache = {};
+
+const today = moment().add(-1, 'day');
+
 export default function Index() {
   const [isMobile] = useState(false);
   const [currentTab, setCurrentTab] = useState('solved');
   const [currentCategory, setCurrentCategory] = useState('1');
-  const [tabList] = useState([
-    {
-      text: '已解决',
-      count: '123',
-      type: 'solved',
-      subCategories: [
-        {
-          text: '申请账号失败',
-          id: '1',
-        },
-        {
-          text: '粉丝数为0',
-          id: '2',
-        },
-        {
-          text: '空间不足',
-          id: '3',
-        },
-        {
-          text: '系统报错',
-          id: '4',
-        },
-        {
-          text: '网络异常',
-          id: '5',
-        },
-        {
-          text: '不在范围',
-          id: '6',
-        },
-      ],
-    },
-    {
-      text: '待解决',
-      count: '10',
-      type: 'needFix',
-      subCategories: [
-        {
-          text: '网络异常',
-          id: '21',
-        },
-        {
-          text: '空间不足',
-          id: '22',
-        },
-      ],
-    },
-    {
-      text: '待验证',
-      count: '32',
-      type: 'needValidate',
-      subCategories: [
-        {
-          text: '系统报错',
-          id: '34',
-        },
-        {
-          text: '网络异常',
-          id: '35',
-        },
-        {
-          text: '不在范围',
-          id: '36',
-        },
-      ],
-    },
-  ]);
+  const [datasource, setDatasource] = useState({});
 
   const renderTitle = (value, index, record) => {
     return (
@@ -85,10 +24,14 @@ export default function Index() {
         <div>
           <IceImg src={record.cover} width={48} height={48} />
         </div>
-        <span className={styles.title}>{record.title}</span>
+        <span className={styles.titleName}>{record.title}</span>
       </div>
     );
   };
+
+  useEffect(() => {
+    onSearch();
+  }, [isMobile]);
 
   const editItem = (record, e) => {
     e.preventDefault();
@@ -124,8 +67,14 @@ export default function Index() {
     console.log('fetch data');
   };
 
-  const onSearch = () => {
-    console.log('search data');
+  const onSearch = async () => {
+    const result = await axios.post('/api/shop/query.json', queryCache);
+    if (result.success) {
+      setDatasource(result.info);
+    } else {
+      console.error(result.message);
+    }
+    console.log('search data.', result);
   };
 
   const onTabChange = (tabKey) => {
@@ -159,51 +108,29 @@ export default function Index() {
     );
   };
 
+  const disabledDate = (value) => {
+    return today.isAfter(value);
+  };
+
   return (
     <div className={styles.complexTabTable}>
       <IceContainer>
-        <Tab
-          onChange={onTabChange}
-          shape="bar"
-          currentTab={currentTab}
-          contentStyle={{
-            padding: 0,
-          }}
-          extra={
-            !isMobile ? renderTabBarExtraContent() : null
-          }
-        >
-          {tabList && tabList.length > 0
-            ? tabList.map((tab) => {
-                return (
-                  <Tab.Item
-                    key={tab.type}
-                    title={
-                      <span>
-                        {tab.text}
-                        <span className={styles.tabCount}>{tab.count}</span>
-                      </span>
-                    }
-                  >
-                    {tab.subCategories && tab.subCategories.length > 0
-                      ? tab.subCategories.map((catItem, index) => {
-                          return (
-                            <SubCategoryItem
-                              {...catItem}
-                              isCurrent={
-                                catItem.id === currentCategory
-                              }
-                              onItemClick={onSubCategoryClick}
-                              key={index}
-                            />
-                          );
-                        })
-                      : null}
-                  </Tab.Item>
-                );
-              })
-            : null}
-        </Tab>
+        <div className={styles.tableFilter}>
+          <div className={styles.title}>过滤餐厅</div>
+          <div className={styles.filter}>
+            <div className={styles.filterItem}>
+              <span className={styles.filterLabel}>日期：</span>
+              <DatePicker disabledDate={disabledDate} />
+            </div>
+            <div className={styles.filterItem}>
+              <span className={styles.filterLabel}>时间：</span>
+              <TimePicker format="HH:mm" minuteStep={30} />
+            </div>
+            <Button type="primary" className={styles.submitButton} >
+              查询
+            </Button>
+          </div>
+        </div>
       </IceContainer>
       <IceContainer>
         <Table
