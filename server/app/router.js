@@ -14,6 +14,8 @@ module.exports = app => {
   router.get('/admin/logout.json', controller.admin.logout);
   router.post('/admin/login.json', controller.admin.login);
   router.get('/admin/status.json', isAdmin, controller.admin.checkStatus);
+  router.post('/admin/shop/query.json', isAdmin, controller.admin.queryShop);
+  router.post('/admin/shop/create.json', isAdmin, controller.admin.createShop);
 
   // client
   router.post('/api/login.json', controller.login.myself);

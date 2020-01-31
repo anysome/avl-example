@@ -26,6 +26,22 @@ class AdminController extends Controller {
     this.ctx.logger.info('Check admin user session');
     this.ctx.result = 'User is logined';
   }
+
+  async queryShop() {
+    const { page, size } = this.ctx.request.body;
+    const content = await this.ctx.service.shop.query(page -1, size);
+    this.ctx.result = {
+      page,
+      size,
+      content,
+    };
+  }
+
+  async createShop() {
+    const shop = this.ctx.request.body;
+    const entity = await this.ctx.service.shop.create(shop);
+    this.ctx.result = entity;
+  }
 }
 
 module.exports = AdminController;
