@@ -5,6 +5,7 @@
 const headerMenuConfig = [];
 
 const asideMenuConfig = [
+  { name: '餐厅', path: '/shop', id: 'Menu_wc9kp' },
   { name: '地图', path: '/map', id: 'Menu_t6kup' },
   { name: '登录', path: '/login', id: 'Menu_bo1x2' },
 ];

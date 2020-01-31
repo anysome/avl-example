@@ -1,7 +1,6 @@
-import HomePage from '@/pages/HomePage';
 import BlankLayout from '@/layouts/BlankLayout';
 import Login from '@/pages/Login';
-import GMap from '@/pages/GMap';
+import Shop from '@/pages/Shop';
 
 const routerConfig = [
   {
@@ -9,8 +8,8 @@ const routerConfig = [
     component: BlankLayout,
     children: [
       { path: '/login', component: Login },
-      { path: '/map', component: GMap },
-      { path: '/', component: HomePage },
+      { path: '/shop', component: Shop },
+      { path: '/', component: Shop },
     ],
   },
 ];

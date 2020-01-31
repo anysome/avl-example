@@ -20,7 +20,7 @@ class APP {
     logout = () => {
         this.user = null;
         store.removeItem('__usr__');
-        history.push('/user/login');
+        history.push('/login');
     };
 };
 

@@ -11,8 +11,8 @@ const Item = Form.Item;
 
 export default function Index() {
   const [value, setValue] = useState({
-    account: '',
-    password: '',
+    name: 'avl ',
+    password: '123456',
     checkbox: false,
   });
 
@@ -30,7 +30,7 @@ export default function Index() {
     if (result.success) {
       app.login(result.info);
       Message.success('登录成功');
-      app.history.push('/map');
+      app.history.push('/shop');
     } else {
       Message.error(result.message);
     }
@@ -46,7 +46,7 @@ export default function Index() {
     if (result.success) {
       app.login(result.info);
       Message.success('登录成功');
-      app.history.push('/map');
+      app.history.push('/shop');
     } else {
       Message.error(result.message);
     }
@@ -112,10 +112,6 @@ export default function Index() {
               onFailure={responseGoogle}
               cookiePolicy={'single_host_origin'}
             />
-            <span className={styles.line}>|</span>
-            <a href="/" className={styles.link}>
-              忘记密码
-              </a>
           </Row>
         </Form>
       </div>
