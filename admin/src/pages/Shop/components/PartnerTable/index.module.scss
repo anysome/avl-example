@@ -1,0 +1,72 @@
+.pagination {
+  margin: 20px 0;
+  text-align: center;
+};
+.customTable {
+  padding-top: 20px;
+};
+.redText {
+  color: #e74c1c;
+};
+.tableFilter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  margin-bottom: 20px;
+  background: #fff;
+};
+.title {
+  height: 20px;
+  line-height: 20px;
+  color: #333;
+  font-size: 18px;
+  font-weight: bold;
+  padding-left: 12px;
+  border-left: 4px solid #666;
+};
+.filter {
+  display: flex;
+};
+.filterItem {
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+};
+.filterLabel {
+  font-weight: 500;
+  color: #999;
+};
+.submitButton {
+  margin-left: 20px;
+};
+.selectWidth{
+  width: 200px;
+}
+
+.simpleFormDialog{ 
+  width: 720px;
+  padding-top: 10px;
+}
+.formContent {
+  margin-left: 30px;
+}
+.formItem {
+  display: flex;
+  align-items: center;
+  margin-bottom: 25px;
+}
+.formLabel {
+  width: 70px;
+  margin-right: 15px;
+  text-align: right;
+}
+.formError {
+  margin-left: 10px;
+}
+.width {
+  width: 400px;
+}
+.paddingRight {
+  padding-right: 5px;
+}
